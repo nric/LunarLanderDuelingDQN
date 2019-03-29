@@ -206,6 +206,11 @@ SAMPLE_BATCH_SIZE   = 32
 env = gym.make(ENV_NAME)
 agent = DQN_Agent(env)
 
+#init running variables
+results_lst = []
+index = 0
+
+#main loop
 for episode in range(EPISODES):
     state = env.reset()
     state = np.reshape(state,[1,agent.state_space_size]) #don't understand why but otherwise tf.keras does sometimes not like the shape
