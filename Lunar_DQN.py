@@ -54,7 +54,7 @@ class DQN_Agent():
         #define state value function
         state_value = tf.keras.layers.Dense(16,activation=tf.keras.layers.LeakyReLU(alpha=self.LReluLAlpha))(input_layer)
         state_value = tf.keras.layers.Dense(1,activation='linear')(state_value)
-        #state value and action value need to have the same shape for concatination
+        #state value and action value need to have the same shape for merging (adding)
         state_value = tf.keras.layers.Lambda(
             lambda s: tf.keras.backend.expand_dims(s[:, 0], axis=-1), 
             output_shape=(self.action_space_size,))(state_value)
@@ -71,7 +71,6 @@ class DQN_Agent():
 
         #merge by adding
         Q = tf.keras.layers.add([state_value,action_advantage])
-        #Q = tf.keras.layers.concatenate([state_value,action_advantage])
 
         #define model
         model = tf.keras.Model(inputs=input_node,outputs=Q)
